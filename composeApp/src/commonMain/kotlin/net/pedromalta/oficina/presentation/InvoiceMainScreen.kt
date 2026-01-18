@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import net.pedromalta.oficina.domain.InvoiceItemType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,7 +96,7 @@ fun InvoiceMainScreen(
                         Button(
                             onClick = {
                                 priceInput.toDoubleOrNull()?.let {
-                                    viewModel.addItem(description, it)
+                                    viewModel.addItem(description, it, InvoiceItemType.PART)
                                     description = ""
                                     priceInput = ""
                                 }
@@ -109,9 +110,123 @@ fun InvoiceMainScreen(
                     }
                 }
 
+                HorizontalDivider()
+
+                Card {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text("Adicionar serviços terceirizados", fontWeight = FontWeight.Bold)
+
+                        OutlinedTextField(
+                            value = description,
+                            onValueChange = { description = it },
+                            label = { Text("Serviço terceirizado") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        OutlinedTextField(
+                            value = priceInput,
+                            onValueChange = { priceInput = it },
+                            label = { Text("Preço") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        Button(
+                            onClick = {
+                                priceInput.toDoubleOrNull()?.let {
+                                    viewModel.addItem(description, it, InvoiceItemType.THIRD_PARTY_SERVICE)
+                                    description = ""
+                                    priceInput = ""
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            Icon(Icons.Default.Add, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text("adicionar")
+                        }
+                    }
+                }
+
+                HorizontalDivider()
+
+                Card {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text("Adicionar serviços", fontWeight = FontWeight.Bold)
+
+                        OutlinedTextField(
+                            value = description,
+                            onValueChange = { description = it },
+                            label = { Text("Serviço") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        OutlinedTextField(
+                            value = priceInput,
+                            onValueChange = { priceInput = it },
+                            label = { Text("Preço") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        Button(
+                            onClick = {
+                                priceInput.toDoubleOrNull()?.let {
+                                    viewModel.addItem(description, it, InvoiceItemType.SERVICE)
+                                    description = ""
+                                    priceInput = ""
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            Icon(Icons.Default.Add, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text("adicionar")
+                        }
+                    }
+                }
+
+                HorizontalDivider()
+
                 Card(modifier = Modifier.weight(1f)) {
                     LazyColumn(modifier = Modifier.padding(16.dp)) {
-                        items(viewModel.items) { item ->
+                        items(viewModel.parts) { item ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(item.description)
+                                    Text(item.price.toString(), fontSize = 12.sp)
+                                }
+                                IconButton(onClick = { viewModel.removeItem(item) }) {
+                                    Icon(Icons.Default.Delete, contentDescription = "remover")
+                                }
+                            }
+                            HorizontalDivider()
+                        }
+
+                        items(viewModel.thirdPartService) { item ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(item.description)
+                                    Text(item.price.toString(), fontSize = 12.sp)
+                                }
+                                IconButton(onClick = { viewModel.removeItem(item) }) {
+                                    Icon(Icons.Default.Delete, contentDescription = "remover")
+                                }
+                            }
+                            HorizontalDivider()
+                        }
+
+                        items(viewModel.services) { item ->
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically
