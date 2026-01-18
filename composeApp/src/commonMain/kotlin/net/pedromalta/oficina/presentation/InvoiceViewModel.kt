@@ -4,11 +4,11 @@ import androidx.compose.runtime.mutableStateListOf
 import net.pedromalta.oficina.domain.Invoice
 import net.pedromalta.oficina.domain.InvoiceItem
 import net.pedromalta.oficina.domain.InvoiceItemType
+import net.pedromalta.oficina.domain.MoneyAmount
 
 class InvoiceViewModel {
 
     private val _items = mutableStateListOf<InvoiceItem>()
-    val items: List<InvoiceItem> get() = _items
 
     val parts: List<InvoiceItem> get() = _items.filter { it.type == InvoiceItemType.PART }
 
@@ -19,11 +19,15 @@ class InvoiceViewModel {
     val invoice: Invoice
         get() = Invoice(items = _items)
 
-    fun addItem(description: String, price: Double, type: InvoiceItemType) {
+    fun addItem(description: String, price: MoneyAmount, type: InvoiceItemType) {
         _items += InvoiceItem(description, price, type)
     }
 
     fun removeItem(item: InvoiceItem) {
         _items.remove(item)
+    }
+
+    fun clearInvoice() {
+        _items.clear()
     }
 }

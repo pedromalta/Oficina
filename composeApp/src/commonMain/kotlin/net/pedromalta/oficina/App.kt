@@ -29,7 +29,6 @@ fun App() {
                 phone = "(27) 99869-6550",
                 CNPJ = "57.491.834/0001-64",
             ),
-            logo = painterResource(Res.drawable.compose_multiplatform),
             viewModel = InvoiceViewModel()
         )
     }
