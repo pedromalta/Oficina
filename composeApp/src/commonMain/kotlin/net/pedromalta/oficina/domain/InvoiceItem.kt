@@ -1,11 +1,15 @@
 package net.pedromalta.oficina.domain
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class InvoiceItem(
     val description: String,
     val price: MoneyAmount,
     val type: InvoiceItemType,
 )
 
+@Serializable
 data class MoneyAmount(
     val amountInCents: Long = 0
 ) {
@@ -17,6 +21,7 @@ data class MoneyAmount(
     }
 }
 
+@Serializable
 enum class InvoiceItemType {
     PART,
     SERVICE,

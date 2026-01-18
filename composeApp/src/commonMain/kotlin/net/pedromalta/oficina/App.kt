@@ -13,7 +13,9 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 @Preview
-fun App() {
+fun App(
+    viewModel: InvoiceViewModel = InvoiceViewModel()
+) {
     MaterialTheme {
         InvoiceMainScreen(
             shop = Shop(
@@ -29,7 +31,7 @@ fun App() {
                 phone = "(27) 99869-6550",
                 CNPJ = "57.491.834/0001-64",
             ),
-            viewModel = InvoiceViewModel()
+            viewModel = viewModel
         )
     }
 }

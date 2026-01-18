@@ -30,4 +30,9 @@ class InvoiceViewModel {
     fun clearInvoice() {
         _items.clear()
     }
+
+    fun setItems(items: List<InvoiceItem>) {
+        _items.clear()
+        _items.addAll(items)
+    }
 }
