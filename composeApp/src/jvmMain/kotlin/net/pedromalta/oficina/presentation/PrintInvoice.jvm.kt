@@ -1,13 +1,18 @@
 package net.pedromalta.oficina.presentation
 
 import net.pedromalta.oficina.domain.Invoice
+import net.pedromalta.oficina.domain.Shop
 
 import java.awt.print.PageFormat
 import java.awt.print.Printable
 import java.awt.print.PrinterJob
 import java.awt.Graphics
 
-actual fun printInvoice(invoice: Invoice, shopName: String) {
+
+actual fun printInvoice(
+    invoice: Invoice,
+    shop: Shop
+) {
     val printerJob = PrinterJob.getPrinterJob()
     printerJob.jobName = "Fatura"
 
@@ -18,7 +23,7 @@ actual fun printInvoice(invoice: Invoice, shopName: String) {
         g2d.translate(pageFormat.imageableX, pageFormat.imageableY)
 
         var y = 20
-        g2d.drawString(shopName, 100, y)
+        g2d.drawString(shop.name, 100, y)
         y += 20
 
         invoice.items.forEach {
