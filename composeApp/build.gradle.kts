@@ -93,10 +93,12 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "net.pedromalta.oficina"
+            packageName = "Faturas Oficina"
             packageVersion = "1.0.0"
             windows {
-                includeAllModules = true // Helps with dependency issues
+                menuGroup = "Faturas Oficina"
+                shortcut = true
+                iconFile.set(project.file("icons/app.ico"))
             }
         }
     }
