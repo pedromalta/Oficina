@@ -95,6 +95,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "net.pedromalta.oficina"
             packageVersion = "1.0.0"
+            windows {
+                includeAllModules = true // Helps with dependency issues
+            }
         }
     }
 }
