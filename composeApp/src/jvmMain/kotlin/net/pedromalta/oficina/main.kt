@@ -31,7 +31,7 @@ fun main() {
         WindowManager.bringToFront()
     }
 
-    //if (!isFirst) return
+    if (!isFirst) return
 
     application {
         val state = rememberWindowState(
@@ -43,6 +43,7 @@ fun main() {
             onCloseRequest = {
                 AppRuntime.AppScope.launch {
                     SingleInstance.stop()
+                    storage.save(invoiceViewModel.invoice.items)
                     AppRuntime.AppScope.cancel()
                     exitApplication()
                 }
